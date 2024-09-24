@@ -1,4 +1,6 @@
 import axios from 'axios'
-window.axios = axios
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+window.$http = axios
+
+window.$http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+window.$http.defaults.baseURL = 'api/'
