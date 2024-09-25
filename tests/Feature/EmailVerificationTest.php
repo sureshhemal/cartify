@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use Domain\Users\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
@@ -19,7 +19,7 @@ test('email verification screen can be rendered', function () {
 }, 'Email verification not enabled.');
 
 test('email can be verified', function () {
-    Event::fake();
+    Event::fake(Verified::class);
 
     $user = User::factory()->create([
         'email_verified_at' => null,
