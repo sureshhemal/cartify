@@ -11,9 +11,13 @@
 |
 */
 
+use Domain\Users\Models\User;
+
+use function Pest\Laravel\actingAs;
+
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+    ->in('Feature', 'Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +45,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function actingAsAdmin()
 {
-    // ..
+    actingAs(User::firstWhere('email', 'admin@admin.com'));
 }

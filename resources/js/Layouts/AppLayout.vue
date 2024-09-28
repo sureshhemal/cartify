@@ -7,6 +7,8 @@ import Dropdown from '@/Components/Dropdown.vue'
 import DropdownLink from '@/Components/DropdownLink.vue'
 import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
+import { DialogWrapper } from 'vue3-promise-dialog'
+import { Notivue, Notification } from 'notivue'
 
 defineProps({
   title: String,
@@ -53,6 +55,12 @@ const logout = () => {
                   :active="route().current('dashboard')"
                 >
                   Dashboard
+                </NavLink>
+                <NavLink
+                  :href="route('users')"
+                  :active="route().current('users')"
+                >
+                  Users
                 </NavLink>
               </div>
             </div>
@@ -272,6 +280,12 @@ const logout = () => {
             >
               Dashboard
             </ResponsiveNavLink>
+            <ResponsiveNavLink
+              :href="route('users')"
+              :active="route().current('users')"
+            >
+              Users
+            </ResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->
@@ -396,13 +410,28 @@ const logout = () => {
         class="bg-white dark:bg-gray-800 shadow"
       >
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <slot name="header" />
+          <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <slot name="header" />
+          </h2>
         </div>
       </header>
 
+
       <!-- Page Content -->
       <main>
-        <slot />
+        <div class="py-12 bg">
+          <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="dark:bg-gray-800 overflow-hidden sm:rounded-lg">
+              <slot name="content" />
+            </div>
+          </div>
+        </div>
+
+        <DialogWrapper />
+
+        <Notivue v-slot="item">
+          <Notification :item="item" />
+        </Notivue>
       </main>
     </div>
   </div>
