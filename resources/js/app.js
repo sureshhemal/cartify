@@ -10,6 +10,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 import notify from '@/Mixins/notify.js'
+import hasPermissionAs from '@/Mixins/hasPermissionAs.js'
 
 import wait from '@meforma/vue-wait-for'
 import { createNotivue } from 'notivue'
@@ -29,6 +30,7 @@ createInertiaApp({
       .use(createNotivue({ position: 'top-right' }))
       .use(FloatingVue)
       .mixin(notify)
+      .mixin(hasPermissionAs)
       .mount(el)
   },
   progress: {

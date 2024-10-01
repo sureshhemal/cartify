@@ -11,6 +11,7 @@
 |
 */
 
+use Domain\RolesAndPermissions\Models\Role;
 use Domain\Users\Models\User;
 
 use function Pest\Laravel\actingAs;
@@ -45,7 +46,22 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function actingAsAdmin()
+function actingAsAdmin(): User
 {
-    actingAs(User::firstWhere('email', 'admin@admin.com'));
+    $user = User::firstWhere('email', 'admin@admin.com');
+
+    actingAs($user);
+
+    return $user;
+}
+
+function actingAsSeller(): User
+{
+    $user = User::factory()->create();
+
+    $user->assignRole(Role::findByName('SELLER'));
+
+    actingAs($user);
+
+    return $user;
 }
