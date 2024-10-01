@@ -3,6 +3,22 @@
 use Domain\RolesAndPermissions\Models\Role;
 use Domain\Users\Models\User;
 
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\postJson;
+use function Pest\Laravel\putJson;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertTrue;
+
+test('can not list users if user doesnt have permissions', function () {
+    User::factory(10)->create();
+
+    actingAsSeller();
+
+    $response = $this->getJson('api/users');
+
+    $response->assertForbidden();
+});
+
 test('can list users', function () {
     User::factory(3)->create(['name' => 'first sample']);
     User::factory(7)->create(['name' => 'second sample']);
@@ -20,6 +36,20 @@ test('can list users', function () {
     $response->assertJsonCount(3, 'data');
 });
 
+test('can not create user if user does not have permissions', function () {
+    $data = [
+        'name' => 'example user',
+        'email' => 'example@example.com',
+        'roles' => [Role::first()],
+    ];
+
+    actingAsSeller();
+
+    $response = postJson('api/users', $data);
+
+    $response->assertForbidden();
+});
+
 test('can create user', function () {
     $data = [
         'name' => 'example user',
@@ -29,9 +59,9 @@ test('can create user', function () {
 
     actingAsAdmin();
 
-    $this->postJson('api/users', $data);
+    postJson('api/users', $data);
 
-    $this->assertDatabaseHas('users', [
+    assertDatabaseHas('users', [
         'name' => $data['name'],
         'email' => $data['email'],
     ]);
@@ -45,8 +75,28 @@ test('send invitation to newly created user', function () {
     //
 })->skip('to be implemented');
 
+test('can not update if user does not have permission', function () {
+    $user = User::factory()->create();
+
+    $user->assignRole($firstRole = Role::first());
+
+    $role = Role::create(['name' => 'sample role']);
+
+    $data = [
+        'id' => $user->id,
+        'name' => 'updated user',
+        'email' => 'updated@example.com',
+        'roles' => [['id' => $role->id, 'name' => $role->name]],
+    ];
+
+    actingAsSeller();
+
+    $response = putJson('api/users/'.$user->id, $data);
+
+    $response->assertForbidden();
+});
+
 test('can update user', function () {
-    /** @var User $user */
     $user = User::factory()->create();
 
     $user->assignRole($firstRole = Role::first());
@@ -62,16 +112,16 @@ test('can update user', function () {
 
     actingAsAdmin();
 
-    $response = $this->putJson('api/users/'.$user->id, $data);
+    $response = putJson('api/users/'.$user->id, $data);
 
     $response->assertOk();
 
-    $this->assertDatabaseHas('users', [
+    assertDatabaseHas('users', [
         'id' => $user->id,
         'name' => $data['name'],
         'email' => $data['email'],
     ]);
 
-    $this->assertTrue($user->fresh()->hasRole($data['roles']));
-    $this->assertFalse($user->fresh()->hasRole($firstRole));
+    assertTrue($user->fresh()->hasRole($data['roles']));
+    assertFalse($user->fresh()->hasRole($firstRole));
 });

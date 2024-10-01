@@ -20,5 +20,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->name('dashboard');
 
-    Route::get('users', fn () => Inertia::render('Users'))->name('users');
+    Route::get('users', fn () => Inertia::render('Users'))->name('users')->middleware('permission:view-any-user|view-own-user');
 });
