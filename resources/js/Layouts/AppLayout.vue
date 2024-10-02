@@ -47,6 +47,7 @@ const navigationLinks = computed(() => {
   return [
     { label: 'Dashboard', hasPermissionTo: true, route: 'dashboard' },
     { label: 'Users', hasPermissionTo: hasPermissionTo(['view-any-user', 'view-own-user']), route: 'users' },
+    { label: 'Categories', hasPermissionTo: hasPermissionTo('view-category'), route: 'categories' },
   ]
 })
 </script>
