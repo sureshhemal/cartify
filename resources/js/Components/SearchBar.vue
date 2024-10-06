@@ -15,19 +15,19 @@ defineProps({
 </script>
 
 <template>
-  <div class="my-2 px-1">
+  <div class="my-2 px-1 text-xs">
     <label
       for="search"
-      class="block text-sm font-medium leading-6 text-gray-900"
+      class="block font-medium leading-6 text-gray-900"
     >Quick search</label>
-    <div class="relative mt-2 flex items-center">
+    <div class="relative flex items-center">
       <input
         id="search"
         type="text"
         name="search"
         :placeholder="placeholder"
         :value="modelValue"
-        class="w-full focus:border-earthy-100 focus:ring focus:ring-earthy-100 focus:ring-opacity-30 rounded-md border-earthy-100 text-sm"
+        class="w-full focus:border-earthy-100 focus:ring focus:ring-earthy-100 focus:ring-opacity-30 rounded-md border-earthy-100 text-xs"
         :class="{'bg-gray-100 cursor-not-allowed': disabled}"
         @input="$emit('update:modelValue', $event.target.value)"
       >

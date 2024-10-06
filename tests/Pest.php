@@ -57,9 +57,14 @@ function actingAsAdmin(): User
 
 function actingAsSeller(): User
 {
+    return actingAsRole('SELLER');
+}
+
+function actingAsRole(string $role): User
+{
     $user = User::factory()->create();
 
-    $user->assignRole(Role::findByName('SELLER'));
+    $user->assignRole(Role::findByName($role));
 
     actingAs($user);
 

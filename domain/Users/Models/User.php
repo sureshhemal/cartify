@@ -5,6 +5,7 @@ namespace Domain\Users\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Observers\ModelObserver;
 use Database\Factories\UserFactory;
+use Domain\Users\QueryBuilders\UserQueryBuilder;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -83,5 +84,10 @@ class User extends Authenticatable
     public static function newFactory(): UserFactory
     {
         return UserFactory::new();
+    }
+
+    public function newEloquentBuilder($query): UserQueryBuilder
+    {
+        return new UserQueryBuilder($query);
     }
 }

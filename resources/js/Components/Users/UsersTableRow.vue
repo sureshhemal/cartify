@@ -30,6 +30,7 @@
     
     <TableData>
       <span
+        v-if="hasPermissionTo('update-user')"
         class="text-earthy-300 hover:text-earthy-500 cursor-pointer"
         @click="$emit('edit-user', user)"
       >Edit<span class="sr-only">, {{ user.name }}</span></span>
