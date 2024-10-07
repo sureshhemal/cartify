@@ -28,5 +28,10 @@ export default {
 
       return this.authUser.roles.some(role => roles.includes(role.name))
     },
+
+    loggedInAs(role) {
+      return this.authUser.roles.length === 1 &&
+        this.hasPermissionAs(role)
+    },
   },
 }

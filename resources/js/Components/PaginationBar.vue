@@ -5,7 +5,7 @@
       <BaseInput
         v-model="perPage"
         name="perPage"
-        type="text"
+        type="number"
         class="text-xs"
         :disabled="$wait.any()"
       />

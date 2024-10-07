@@ -83,7 +83,7 @@ export default {
   },
 
   watch: {
-    user: {
+    category: {
       deep: true,
       immediate: true,
       handler() {
