@@ -1,7 +1,6 @@
 <?php
 
-use Domain\RolesAndPermissions\Models\Permission;
-use Domain\RolesAndPermissions\Models\Role;
+use App\Actions\CreatePermissionsAction;
 use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
@@ -9,20 +8,15 @@ return new class extends Migration
     public function up(): void
     {
         $permissions = [
-            'view-any-user',
-            'view-own-user',
-            'create-user',
-            'update-user',
-            'delete-user',
-            'restore-user',
-            'force-delete-user',
+            'view-any-user' => ['SUPER_ADMIN', 'ADMIN'],
+            'view-own-user' => ['SUPER_ADMIN', 'ADMIN', 'BUYER', 'SELLER'],
+            'create-user' => ['SUPER_ADMIN', 'ADMIN'],
+            'update-user' => ['SUPER_ADMIN', 'ADMIN'],
+            'delete-user' => ['SUPER_ADMIN', 'ADMIN'],
+            'restore-user' => ['SUPER_ADMIN', 'ADMIN'],
+            'force-delete-user' => ['SUPER_ADMIN', 'ADMIN'],
         ];
 
-        $permissions = collect($permissions)
-            ->map(fn ($permission) => Permission::create(['name' => $permission]));
-
-        $roles = Role::query()->whereIn('name', ['SUPER_ADMIN', 'ADMIN'])->get();
-
-        $roles->each(fn (Role $role) => $role->givePermissionTo($permissions));
+        (new CreatePermissionsAction)->execute(collect($permissions));
     }
 };

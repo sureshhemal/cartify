@@ -30,6 +30,7 @@
         "@meforma/vue-wait-for": "^0.0.2",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@vee-validate/rules": "^4.13.2",
+        "currency.js": "^2.0.4",
         "floating-vue": "^5.2.2",
         "lodash": "^4.17.21",
         "notivue": "^2.4.5",

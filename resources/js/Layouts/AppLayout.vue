@@ -48,6 +48,7 @@ const navigationLinks = computed(() => {
     { label: 'Dashboard', hasPermissionTo: true, route: 'dashboard' },
     { label: 'Users', hasPermissionTo: hasPermissionTo(['view-any-user', 'view-own-user']), route: 'users' },
     { label: 'Categories', hasPermissionTo: hasPermissionTo('view-category'), route: 'categories' },
+    { label: 'Products', hasPermissionTo: hasPermissionTo(['view-any-product', 'view-own-product']), route: 'products' },
   ]
 })
 </script>
@@ -437,12 +438,11 @@ const navigationLinks = computed(() => {
         </div>
       </header>
 
-
       <!-- Page Content -->
       <main>
         <div class="py-12 bg">
           <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="dark:bg-gray-800 overflow-hidden sm:rounded-lg">
+            <div class="dark:bg-gray-900 overflow-hidden sm:rounded-lg">
               <slot name="content" />
             </div>
           </div>

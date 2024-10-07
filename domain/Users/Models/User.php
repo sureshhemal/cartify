@@ -6,6 +6,7 @@ namespace Domain\Users\Models;
 use App\Observers\ModelObserver;
 use Database\Factories\UserFactory;
 use Domain\Users\QueryBuilders\UserQueryBuilder;
+use Domain\Users\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,7 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
+    use HasPermissions;
     use HasProfilePhoto;
     use HasRoles;
     use Notifiable;
