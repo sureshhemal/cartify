@@ -13,14 +13,14 @@
     >
       <div class="relative mt-1">
         <label
-          class="block text-xs font-medium text-gray-700"
+          class="block text-xs font-medium text-gray-700 dark:text-gray-200"
         >
           {{ title }}
         </label>
         <ListboxButton
           :disabled="disabled"
-          class="relative w-full rounded-md pl-3 pr-10 text-left shadow-md sm:text-xs"
-          :class="[disabled ? 'cursor-not-allowed bg-gray-100' : 'cursor-pointer bg-white']"
+          class="relative w-full rounded-md pl-3 pr-10 text-left shadow-md sm:text-xs dark:bg-gray-700 dark:text-white"
+          :class="[disabled ? 'cursor-not-allowed bg-gray-200 dark:bg-gray-500 dark:text-white' : 'cursor-pointer bg-white']"
           style="min-height: 30px"
         >
           <span
@@ -54,7 +54,7 @@
         >
           <div v-show="open">
             <ListboxOptions
-              class="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg sm:text-xs"
+              class="absolute mt-1 z-10 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg sm:text-xs dark:bg-gray-700"
             >
               <ListboxOption
                 v-for="option in options"
@@ -66,7 +66,7 @@
               >
                 <li
                   :class="[
-                    active || option[trackBy] === modelValue?.[trackBy] ? 'bg-earthy-200 text-white font-semibold' : 'text-gray-900',
+                    active || option[trackBy] === modelValue?.[trackBy] ? 'bg-earthy-200 text-white font-semibold' : 'text-gray-900 dark:text-white',
                     'cursor-pointer py-2 px-2 block truncate text-xs text-left',
                   ]"
                 >

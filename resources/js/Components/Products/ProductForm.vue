@@ -1,0 +1,198 @@
+<template>
+  <Form
+    v-slot="{ errorBag }"
+    as="div"
+    class="dialog text-xs"
+  >
+    <div class="center rounded-lg w-1/2 h-3/4 overflow-y-scroll space-y-4 bg-teal-50 dark:bg-gray-800">
+      <div class="text-sm dark:text-gray-200">
+        Modify Category
+      </div>
+
+      <SingleSelectorDropdown
+        v-model="selectedSeller"
+        :options="sellers"
+        :disabled="loggedInAs('SELLER')"
+        placeholder="Select Seller"
+        label="name"
+        name="role"
+        title="Seller"
+        rules="required"
+      />
+
+      <SingleSelectorDropdown
+        v-model="selectedCategory"
+        :options="categories"
+        placeholder="Select Category"
+        label="name"
+        name="category"
+        title="Category"
+        rules="required"
+      />
+
+      <BaseInput
+        v-model="form.name"
+        label="Name"
+        name="name"
+        rules="required"
+      />
+
+      <BaseInput
+        v-model="form.code"
+        label="Code"
+        name="code"
+        :rules="{
+          required: true,
+          notIn: existingCategoryCodes
+        }"
+      />
+
+      <BaseInput
+        v-model="form.description"
+        label="Description"
+        name="description"
+        rules="required"
+      />
+
+      <BaseInput
+        v-model="form.quantity"
+        label="Quantity"
+        name="quantity"
+        rules="required|integer|greaterThan:0"
+      />
+
+      <BaseInput
+        v-model="form.price.amount"
+        label="Price"
+        name="price"
+        rules="required|numeric|greaterThan:0"
+      />
+
+      <div class="pt-4 flex space-x-2">
+        <BaseButton
+          :error-bag="errorBag"
+          @click="submitForm"
+        >
+          Submit
+        </BaseButton>
+        <BaseButton @click="cancelForm">
+          Cancel
+        </BaseButton>
+      </div>
+    </div>
+  </Form>
+</template>
+
+<script>
+import BaseButton from '@/Components/BaseButton.vue'
+import BaseInput from '@/Components/BaseInput.vue'
+import { cloneDeep } from 'lodash'
+import { closeDialog } from 'vue3-promise-dialog'
+import { Form } from 'vee-validate'
+import SingleSelectorDropdown from '@/Components/SingleSelectorDropdown.vue'
+
+export default {
+  name: 'ProductForm',
+
+  components: {
+    SingleSelectorDropdown,
+    BaseInput,
+    BaseButton,
+    Form,
+  },
+
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+
+    categories: {
+      type: Array,
+      required: true,
+    },
+
+    sellers: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  data() {
+    return {
+      form: {},
+    }
+  },
+
+  computed: {
+    existingCategoryCodes() {
+      return this.categories.map(category => category.code)
+        .filter(code => this.product.code !== code)
+    },
+
+    selectedSeller: {
+      get() {
+        return this.sellers.find(seller => this.form.seller_id === seller.id)
+      },
+      set(seller) {
+        this.form.seller_id = seller.id
+      },
+    },
+
+    selectedCategory: {
+      get() {
+        return this.categories.find(category => this.form.category_id === category.id)
+      },
+      set(category) {
+        this.form.category_id = category.id
+      },
+    },
+  },
+
+  watch: {
+    product: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.form = cloneDeep(this.product)
+      },
+    },
+  },
+
+  methods: {
+    validate(values, actions) {
+      console.log({ values, actions })
+    },
+
+    submitForm() {
+      closeDialog({ ...this.form })
+    },
+
+    cancelForm() {
+      closeDialog(false)
+    },
+  },
+}
+</script>
+
+<style scoped>
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: scroll;
+}
+
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+
+</style>

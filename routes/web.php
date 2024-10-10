@@ -25,4 +25,7 @@ Route::middleware([
 
     Route::get('categories', fn () => Inertia::render('Categories'))->name('categories')
         ->middleware('permission:view-category');
+
+    Route::get('products', fn () => Inertia::render('Products'))->name('products')
+        ->middleware('permission:view-any-product|view-own-product');
 });
