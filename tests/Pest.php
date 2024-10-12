@@ -48,7 +48,7 @@ expect()->extend('toBeOne', function () {
 
 function actingAsAdmin(): User
 {
-    $user = User::firstWhere('email', 'admin@admin.com');
+    $user = User::firstWhere('email', 'admin@cartify.com');
 
     actingAs($user);
 
@@ -58,6 +58,11 @@ function actingAsAdmin(): User
 function actingAsSeller(): User
 {
     return actingAsRole('SELLER');
+}
+
+function actingAsBuyer(): User
+{
+    return actingAsRole('BUYER');
 }
 
 function actingAsRole(string $role): User

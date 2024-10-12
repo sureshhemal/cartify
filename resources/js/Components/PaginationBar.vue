@@ -1,16 +1,15 @@
 <template>
   <div class="flex justify-between my-4 mx-2 items-center">
     <div class="flex items-center space-x-2">
-      <label class="text-xs">Per Page</label>
+      <label class="text-xs dark:text-white">Per Page</label>
       <BaseInput
         v-model="perPage"
         name="perPage"
-        type="text"
-        class="text-xs"
+        type="number"
         :disabled="$wait.any()"
       />
     </div>
-    <div class="text-xs">
+    <div class="text-xs dark:text-white">
       {{ currentResultRangeSummary }}
     </div>
     <div>

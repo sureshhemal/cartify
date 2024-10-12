@@ -62,20 +62,20 @@ defineExpose({ focus: () => input.value.focus() })
     :validate-on-mount="true"
     :model-value="modelValue"
     as="div"
-    class="flex flex-col"
+    class="flex flex-col dark:bg-gray-800"
   >
     <label
       v-if="label"
       :for="name"
-      class="font-xs text-gray-700"
+      class="font-xs text-gray-700 dark:text-white"
     >{{ label }}</label>
     <input
       :id="name"
       ref="input"
       :disabled="disabled"
       v-bind="$attrs"
-      class="focus:border-earthy-100 focus:ring focus:ring-earthy-100 focus:ring-opacity-30 rounded-md shadow-sm border-earthy-100 text-xs"
-      :class="{'bg-gray-100 cursor-not-allowed': disabled}"
+      class="focus:border-earthy-100 focus:ring focus:ring-earthy-100 focus:ring-opacity-30 rounded-md shadow-sm border-earthy-100 text-xs dark:bg-gray-700 dark:text-white"
+      :class="{'bg-gray-100 dark:bg-gray-500 dark:text-white cursor-not-allowed': disabled}"
       :value="value"
       :type="type"
       @input="$emit('update:modelValue', $event.target.value)"

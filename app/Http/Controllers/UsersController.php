@@ -13,9 +13,11 @@ class UsersController extends Controller
     public function index(GetUsersAction $getUsersAction): JsonResponse
     {
         return response()->json($getUsersAction->execute(
-            perPage: request('per_page', 20),
-            page: request('page', 1),
-            search: request('search')
+            askingUser: auth()->user(),
+            perPage: request('per_page'),
+            page: request('page'),
+            search: request('search'),
+            role: request('role'),
         ));
     }
 

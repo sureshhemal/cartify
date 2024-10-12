@@ -126,6 +126,8 @@ export default {
   right: 0;
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px); /* Add blur effect */
+  -webkit-backdrop-filter: blur(3px); /* For Safari */
   overflow: scroll;
 }
 
